@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int maxDistance(vector<vector<int>>& grid) 
+    {
+        queue<pair<int,int>> q;
+        int i,j,k,l,n=grid.size();
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(grid[i][j])
+                    q.push({i,j});
+            }
+        }
+        if(q.empty()||q.size()==(n*n))return -1;
+        l=-1;
+       while(!q.empty())
+       {
+           int p = q.size();
+           l++;
+           for(int i=0;i<p;i++)
+           {
+               j=q.front().first;
+               k=q.front().second;
+               q.pop();
+               int d[4][2]={{1,0},{-1,0},{0,1},{0,-1}};
+               for(int t=0;t<4;t++)
+               {
+                   int j1 = j+d[t][0];
+                   int k1 = k+d[t][1];
+                   if(j1<0||k1<0||j1>=n||k1>=n||grid[j1][k1])continue;
+                   grid[j1][k1]=1;
+                   q.push({j1,k1});
+               }
+           }
+       }
+        return l;
+    }
+};
