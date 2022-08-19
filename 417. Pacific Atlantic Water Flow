@@ -1,0 +1,47 @@
+class Solution {
+public:
+    bool isSafe(vector<vector<int>>&g,int r,int c,int p,vector<vector<bool>>&ocean){
+        if(r < 0 || c < 0 || r >= g.size() || c >= g[0].size() || p > g[r][c] || ocean[r][c]) return false;
+        return true;
+    }
+    void dfs(vector<vector<int>>&g,int r,int c,int p,vector<vector<bool>>&ocean){
+        if(!isSafe(g,r,c,p,ocean)) return;
+        
+        ocean[r][c]=true;
+        
+        dfs(g,r+1,c,g[r][c],ocean);
+        dfs(g,r-1,c,g[r][c],ocean);
+        dfs(g,r,c+1,g[r][c],ocean);
+        dfs(g,r,c-1,g[r][c],ocean);
+    }
+    vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
+        vector<vector<int>> res;
+        
+        if(!heights.size())return res;
+        
+        int row = heights.size();
+        int col = heights[0].size();
+        
+        vector<vector<bool>> atlantic(row, vector<bool>(col, false));
+        vector<vector<bool>> pacific(row, vector<bool>(col, false));
+        // Row with pacific and atlantic woterflow
+        for(int i = 0; i < row; i++){
+            dfs(heights, i, 0, INT_MIN, pacific);
+            dfs(heights, i, col-1, INT_MIN, atlantic);
+        }
+        // Col with pacific and atlantic woterflow
+        for(int j = 0; j < col; j++){
+            dfs(heights, 0, j, INT_MIN, pacific);
+            dfs(heights, row-1, j, INT_MIN, atlantic);
+        }
+        // if both are required flow then keep it result vector
+        for(int i = 0; i < row; i++){
+            for(int j = 0; j < col; j++){
+                if(pacific[i][j] && atlantic[i][j]) res.push_back({i, j});
+            }
+        }
+        
+        
+        return res;
+    }
+};
