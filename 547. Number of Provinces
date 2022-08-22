@@ -1,0 +1,33 @@
+class Solution {
+public:
+    void dfs(int i,int j,vector<vector<int>>& isConnected)
+    {
+        // marks the coty as visited //
+        isConnected[i][j]=0;
+        // recurse for further connected ciites //
+        for(auto  c=0;c<isConnected.size();c++)
+        {
+            if(isConnected[j][c]==1)
+            {
+                dfs(j,c,isConnected);
+            }
+        }
+    }
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int numprovinces=0;
+        int m = isConnected.size();
+        int n = isConnected[0].size();
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(isConnected[i][j]==1)
+                {
+                    numprovinces++;
+                    dfs(i,j,isConnected);
+                }
+            }
+        }
+        return numprovinces;
+    }
+};
