@@ -1,0 +1,39 @@
+class Solution {
+public:
+    bool dfs(int i,vector<vector<int>> &graph,map<int,bool> &mp)
+    {
+        if(mp.find(i) != mp.end())
+        {
+         
+            return mp[i];
+        }
+            mp[i]=false;
+        for(auto it:graph[i])
+        {
+            if(!dfs(it,graph,mp))
+            {
+                return mp[i];
+            }        
+        }
+        mp[i]=true;
+        return mp[i];
+    }
+    vector<int> eventualSafeNodes(vector<vector<int>>& graph) 
+    {
+        // we have to retrn the safe node //
+        // a safe node will not be the part of the cycle //
+        // checks in hashmap abput cycle //
+        int n = graph.size();
+        map<int,bool> mp;
+        vector<int> ans;
+        vector<int> vis(n,0);
+        for(int i=0;i<n;i++)
+        {
+            if(dfs(i,graph,mp))
+            {
+                ans.push_back(i);// store the index //
+            }
+        }
+        return ans;
+    }
+};
