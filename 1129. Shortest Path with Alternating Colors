@@ -1,0 +1,60 @@
+class Solution {
+public:
+    vector<int> shortestAlternatingPaths(int n, vector<vector<int>>& redEdges, vector<vector<int>>& blueEdges) 
+    {
+        unordered_map<int,unordered_set<int>> red,blue;
+        for(vector<int> v:redEdges)
+        {
+            red[v[0]].insert(v[1]);
+        }
+        for(vector<int> v:blueEdges)
+        {
+            blue[v[0]].insert(v[1]);
+        }
+        vector<int> ans(n,-1);
+        queue<vector<int>> q;
+        vector<vector<int>> vis(n,vector<int>(3,0));; // for checking that a particular vertices with particular edge colour is visited before or not .
+        q.push({0,-1,0});
+        while(!q.empty())
+        {
+            vector<int> p = q.front();
+            q.pop();
+            if(vis[p[0]][p[1]+1]==1)// checking for avoiding cycle .
+                continue;
+            int ver=p[0];
+            int prevcolor=p[1];
+            int dis=p[2];
+            vis[ver][prevcolor+1]=1;  // updating current vertices is visited with this precololur .
+            if(ans[ver]==-1)       // only first visited distancs is stored irrespective of edgecolur .
+            {
+                ans[ver]=dis;
+            }
+            if(prevcolor==-1)
+            {
+                for(auto it:blue[ver])
+                {
+                    q.push({it,1,dis+1});
+                }
+                for(auto it:red[ver])
+                {
+                    q.push({it,0,dis+1});
+                }
+            }
+            else if(prevcolor==0)
+            {
+                for(auto it: blue[ver])
+                {
+                    q.push({it,1,dis+1});
+                }
+            }
+            else if(prevcolor==1)
+            {
+                for(auto it: red[ver])
+                {
+                    q.push({it,0,dis+1});
+                }
+            }
+        }
+        return ans;
+    }
+};
