@@ -1,0 +1,43 @@
+class Solution {
+public:
+    int minimumJumps(vector<int>& forbidden, int a, int b, int x) 
+    {
+        unordered_set<int> forbi(forbidden.begin(),forbidden.end());
+        int far = *max_element(forbidden.begin(),forbidden.end())+a+b;
+        far = max(far,x+a+b);
+        vector<vector<int>> visit(2,vector<int> (far+1));
+        queue<pair<int,bool>> q;
+        q.push({0,false});
+        visit[0][0]=1;
+        visit[1][0]=1;
+        int ans = 0;
+        while(!q.empty())
+        {
+           int len =q.size();
+            while(len-- > 0)
+            {
+                int curr= q.front().first;
+                bool flag = q.front().second;
+                if(curr==x)
+                {
+                    return ans;
+                }
+                q.pop();
+                int forward=curr+a;
+                int backward=curr-b;
+                if(forward<= far && visit[0][forward]==0 && !forbi.count(forward))
+                {
+                    q.push({forward,false});
+                    visit[0][forward]=1;
+                }
+                if(backward >= 0 && visit[1][backward]==0 && !forbi.count(backward) && !flag)
+                {
+                    q.push({backward,true});
+                    visit[1][backward]=1;
+                }
+            }
+            ans++;
+        }
+        return -1;
+    }
+};
