@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool recursion_ki_help(vector<int> &arr,int start,vector<bool> &visited)
+    {
+        if(start < 0 || start >= arr.size() || visited[start])
+            return false;
+        if(arr[start]==0)
+            return true;
+        else
+        {
+            visited[start]=true;
+            bool a=false;
+            bool b=false;
+            a=recursion_ki_help(arr,start-arr[start],visited);// left // i-arr[i]//
+            b=recursion_ki_help(arr,start+arr[start],visited);// right // i+arr[i] //
+            
+            return (a||b);
+        }
+    }
+    bool canReach(vector<int>& arr, int start) 
+    {
+        vector<bool> visited(arr.size(),false);
+        return recursion_ki_help(arr,start,visited);
+    }
+};
