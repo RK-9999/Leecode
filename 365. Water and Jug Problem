@@ -1,0 +1,31 @@
+class Solution {
+public:
+    bool canMeasureWater(int j1, int j2, int target) 
+    {
+        if(j1+j2==target)
+            return true;
+        int n = j1+j2;
+        vector<int> visit(n,0);
+        queue<int> q;
+        q.push(0);
+        while(!q.empty())
+        {
+            int curr=q.front();
+            visit[curr]=1;
+            q.pop();
+            if(curr==target)
+            {
+                return true;
+            }
+            if(curr+j1 >= 0 && curr+j1 <n && visit[curr+j1]==0)
+                q.push(curr+j1);
+             if(curr-j1 >= 0 && curr-j1 <n && visit[curr-j1]==0)
+                q.push(curr-j1);
+             if(curr+j2 >= 0 && curr+j2 <n && visit[curr+j2]==0)
+                q.push(curr+j2);
+             if(curr-j2 >= 0 && curr-j2 <n && visit[curr-j2]==0)
+                q.push(curr-j2);
+        }
+        return false;
+    }
+};
