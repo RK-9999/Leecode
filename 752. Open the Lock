@@ -1,0 +1,71 @@
+class Solution {
+public:
+    int openLock(vector<string>& deadends, string target) {
+        int ans = 0;
+        
+        set<string> s(deadends.begin(),deadends.end());
+        
+        if(s.find("0000")!=s.end()){
+            //string 0000 is actually in deadend 
+            return -1;
+        }
+        
+        queue<string> q;
+        q.push("0000");
+        
+        while(!q.empty()){
+            //level order traversal
+            int n = q.size();
+            for(int i = 0;i<n;i++){
+                string  temp = q.front();
+                q.pop();
+                if(temp==target)return ans;
+                
+              //add adjacent nodes to queue
+                /*
+                    for a node, we have 4 possible wheels to move. similarly, a wheel can be move backward or forward.
+                    for example. for 0000, these moves are possible(provided that they are not in deadend).
+                    
+                    1st wheel
+                    0000 -> 1000
+                    0000 -> 9000
+                    
+                    2nd wheel
+                    0000 -> 0100
+                    0000 -> 0900
+                    
+                    3rd wheel
+                    0000 -> 0010
+                    0000 -> 0090
+                    
+                    4th wheel
+                    0000 -> 0001
+                    0000 -> 0009
+                */
+                for(int j = 0; j < 4; j++){
+                    string backward = temp.substr( 0 , j )+to_string( temp[j] == '0' ? 9 : temp[j] - '0' - 1 ) + temp.substr( j+1 );
+                    string forward = temp.substr( 0 , j )+to_string( temp[j] == '9' ? 0 : temp[j] - '0' + 1 ) + temp.substr( j+1 );
+                    
+                    if(!s.count(backward)){
+                        //string is not in deadend.
+                        // we do not want to encounter this node again
+                        s.insert(backward);
+                        q.push(backward);
+                    }
+                    
+                    if(!s.count(forward)){
+                        s.insert(forward);
+                        q.push(forward);
+                    }
+                    
+                }
+                
+            }
+            ans++;
+            
+        }
+        // we are unable to find target.
+        return -1;
+        
+    }
+};
