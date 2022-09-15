@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector<int> findOriginalArray(vector<int>& changed) 
+    {
+        int n = changed.size();
+        vector<int> ans;// answer storing array
+        vector<int> vacans;// when no double number is there return the vacant array
+        unordered_map<int,int> um;
+        if(n%2 != 0) return ans;
+        sort(changed.begin(),changed.end());
+        for(auto x : changed)
+        {
+            um[x]++;
+        }
+        for(auto y : changed)
+        {
+            if(um[y]==0)
+                continue;
+            if(um[y*2]==0)
+                return vacans;
+            ans.push_back(y); // if we have both y and y*2 return vacant array //
+            um[y]--;
+            um[y*2]--;// decrease the frequency of y and y*2//
+        }
+        return ans;
+    }
+};
