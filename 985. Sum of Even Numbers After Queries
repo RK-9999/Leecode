@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<int> sumEvenAfterQueries(vector<int>& nums, vector<vector<int>>& queries) 
+    {
+        int sum = 0;
+        // find the sum of all even numbers  in nums[] //
+        for(int i=0;i<nums.size();i++)
+        {
+            if(nums[i]%2==0)
+            {
+                sum += nums[i];
+            }
+        }
+        vector<int> ans;// to return the ans //
+        // query //
+        for(int i=0;i<queries.size();i++)
+        {
+            int val = queries[i][0];// val //
+            int index = queries[i][1];// index //
+            if(nums[index] % 2 == 0)
+            {
+                sum -= nums[index];// if odd then subtract //
+            }
+            nums[index] += val;
+            if(nums[index] % 2 == 0)
+            {
+                sum += nums[index];// if even add it to sum //
+            }
+            ans.push_back(sum);
+        }
+        return ans;
+    }
+};
