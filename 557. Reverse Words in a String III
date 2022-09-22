@@ -1,0 +1,22 @@
+class Solution {
+public:
+    string reverseWords(string s) 
+    {
+        string temp = "";
+        string ans = "";
+        for(auto x : s)
+        {
+            if(x != ' ')
+            {
+                temp = x + temp;
+            }
+            else
+            {
+                ans += (temp + " ");
+                temp = "";
+            }      
+        }
+        ans += temp;
+        return ans;
+    }
+};
