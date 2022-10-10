@@ -1,0 +1,22 @@
+class Solution {
+public:
+    string breakPalindrome(string s) 
+    {
+        int n = s.size();
+        //How to detect if there is impossible to perform the replacement? Only when the length = 1.
+        if(n==1)
+            return "";
+        for(int i=0;i<n/2;i++)
+        {
+            //Change the first non 'a' character to 'a'.
+            //What if the string has only 'a'?
+            if(s[i]!='a')
+            {
+                s[i]='a';
+                return s;
+            }
+        }
+        s[n-1]='b';//Change the last character to 'b'.
+        return s;
+    }
+};
