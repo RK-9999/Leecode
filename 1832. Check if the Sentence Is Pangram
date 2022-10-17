@@ -1,0 +1,12 @@
+class Solution {
+public:
+    bool checkIfPangram(string sentence) 
+    {
+        //A PARAGRAM IS A SENTENCE WHERE EVERY LETTER OF THE ENGLISH ALPHBHET APPERAS AT LEAST ONCE //
+        // THAT MENAS TO RETURN TRUE THERE SHOULD BE 26 APLHAPBHETS IN A SENTENCE //
+        // WE WIIL USE THE SET OF TYOE CHAR WHICH WILL STORE THE UNIQUE COUNT OF EACH ELEMENT //
+        unordered_set<char> seen(sentence.begin(),sentence.end());// iterate all over the sentence //
+        // we will return true if size of set of name-->(seen) is 26 //
+        return seen.size()==26;
+    }
+};
