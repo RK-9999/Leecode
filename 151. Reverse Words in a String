@@ -1,0 +1,66 @@
+class Solution {
+public:
+    string reverseWords(string s) 
+    {
+        // BREAKUP THE INPUT INTO WORDS AND PUT THEM INTO STACK //
+        string ans;
+        stack<string> st;
+        for(int i=0;i<s.size();i++)
+        {
+            if(s[i]==' ')
+            {
+                if(ans != "")
+                st.push(ans);
+                ans = "";
+                continue;
+            }
+            ans += s[i];
+        }
+        if(ans != "")
+        st.push(ans);
+        string res;
+        while(!st.empty())
+        {
+            string x = st.top();
+            st.pop();
+            res += x;
+            if(!st.empty())
+            {
+                res += " ";
+            }
+        }
+        return res;
+    }
+};
+/*
+class Solution {
+public:
+    string reverseWords(string s) {
+        string ans;
+        stack<string> st;
+       for(int i=0;i<s.length();i++)
+       {
+           if(s[i]==' ')
+           {
+               if(ans!="")
+            st.push(ans);
+               ans="";
+               continue;
+           }
+            ans+=s[i];
+       }
+        if(ans!="")
+        st.push(ans);
+        string res;
+        while(!st.empty())
+        {
+            string x=st.top();
+            st.pop();
+            res+=x;
+            if(!st.empty())
+            res+=" ";
+        }
+        return res;
+    }
+};
+*/
