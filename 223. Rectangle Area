@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int computeArea(int a, int b, int c, int d, int e, int f, int g, int h) 
+    {    
+        int total = (c-a)*(d-b)+(g-e)*(h-f);
+        if(c<=e || d<=f || a>=g || b>= h)
+        {
+            return total;
+        }
+        else
+        {
+            vector<int> v;
+            v.push_back(a);
+            v.push_back(c);
+            v.push_back(e);
+            v.push_back(g);
+
+            vector<int> v1;
+            v1.push_back(b);
+            v1.push_back(d);
+            v1.push_back(f);
+            v1.push_back(h);
+
+            sort(v.begin(),v.end());
+            sort(v1.begin(),v1.end());
+
+            total = total - (v[2]-v[1])*(v1[2]-v1[1]);
+        }
+        return total;
+    }
+};
