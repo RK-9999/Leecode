@@ -1,0 +1,40 @@
+
+class Solution {
+ vector<vector<string>> ans;// to return the ans ///
+public:
+   
+
+    vector<vector<string>> partition(string s)
+    {
+        help(s,0,{});
+        return ans;    
+    }
+    void help(string &s,int pos,vector<string> v)
+    {
+        if(pos > s.size())return;
+        if(pos == s.size())
+        {
+            ans.push_back(v);
+            return;
+        }
+        int i;
+        for(i=1;i<=s.size()-pos;i++)
+
+        {
+            string s1 = s.substr(pos,i);
+            if(ispalindrome(s1))
+            {
+                v.push_back(s1);
+                help(s,pos+i,v);
+                v.pop_back();
+            }
+        }
+    }
+    bool ispalindrome(string s)
+    {
+        string s1 = s;
+        reverse(s.begin(),s.end());
+        return s1==s;
+    }
+};
+
