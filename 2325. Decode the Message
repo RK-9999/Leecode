@@ -1,0 +1,41 @@
+class Solution {
+public:
+    string decodeMessage(string key, string message) 
+    {
+        string st,res;
+        // stroring characters from A to Z into the string //
+        for(char i='a';i<='z';i++)
+        {
+            st.push_back(i);
+        }
+        // storing the values in string st with respect to key into unordered map //
+        unordered_map<char,char> mp;
+        int j=0;
+        for(auto it : key)
+        {
+            if(it==' ')
+            {
+                continue;
+            }
+            else if(mp.find(it)==mp.end())
+            {
+                mp[it]=st[j];
+                j++;
+            }
+        }
+        // decoding the message with help of unorderd_map //
+        for(auto it :message)
+        {
+            if(it==' ')
+            {
+                res += ' ';
+            }
+            else
+            {
+                res += mp[it];
+            }
+        }
+        return res;
+
+    }
+};
