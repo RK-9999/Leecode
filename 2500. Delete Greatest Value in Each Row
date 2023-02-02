@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int deleteGreatestValue(vector<vector<int>>& grid) 
+    {
+        int res = 0;
+        for(vector<int>& grid1 : grid)
+        {
+            sort(grid1.begin(),grid1.end());
+        }    
+        for(int j=0;j<grid[0].size();j++)
+        {
+            int mx = INT_MIN;
+            for( int i=0;i<grid.size();i++)
+            {
+                mx = max(mx,grid[i][j]);
+            }
+            res += mx;
+        }
+        return res;
+    }
+};
